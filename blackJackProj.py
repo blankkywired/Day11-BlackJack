@@ -26,7 +26,7 @@ def choiceCardFunction(quantity, owner):
             if card == "J" or card == "K" or card == "Q":
                 amountTotalUser += 10
             elif card == "A":
-                amountTotalUser = int(input('What value do you want?(1/11):'))
+                amountTotalUser += int(input('What value do you want?(1/11):'))
             else:
                 amountTotalUser += card
         totalScoreUser.append(amountTotalUser) #Salvando o valor total em totalScoreUser
@@ -57,11 +57,15 @@ while condiction:
             choice = input("Type 'y' to get another card or type 'n' to pass: ").capitalize()
             if choice == "Y":
                 print(choiceCardFunction(1, 'user'))
+                print(choiceCardFunction(1, 'dealer'))
             elif choice == "N":
                 break
         elif totalScoreUser[-1] > 21:
             print('You lose')
             condiction = False
             break
+        else:
+            print(f"You win {choosenCardsOwner} Your Score {totalScoreUser[-1]}\nComputer's final hand:")
+            condiction = False
         
 #O codigo não está retornando  o valor do As para a soma total dos valores

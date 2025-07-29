@@ -11,7 +11,8 @@ choosenCardsOwner = []
 limiter = 21
 
 
-totalScore = []
+totalScoreUser = []
+totalScoreDealer = []
 def choiceCardFunction(quantity, owner):
     amountTotalUser = 0 #Acumulador dos valores de cada carta do  usuario
     amountValueDealer = 0 #Acumulador dos valores de cada carta do computador(dealer)
@@ -28,7 +29,7 @@ def choiceCardFunction(quantity, owner):
                 amountTotalUser = int(input('What value do you want?(1/11):'))
             else:
                 amountTotalUser += card
-        totalScore.append(amountTotalUser) #Salvando o valor total em totalScore
+        totalScoreUser.append(amountTotalUser) #Salvando o valor total em totalScoreUser
         return f"Your cards {choosenCardsOwner} Total Score {amountTotalUser}"
 
     elif owner == "dealer":
@@ -40,25 +41,27 @@ def choiceCardFunction(quantity, owner):
                 amountValueDealer += 10
             else:
                 amountValueDealer += card
+            totalScoreDealer.append(amountValueDealer)
         return f"Computer  {choosenCardsDealer}, Total Score: {amountValueDealer} , computer first card: {choosenCardsDealer[0]}"
 
 
 firstChoice = input("Do you want to play a blackjack game? 'Y' or 'N': ").capitalize()
 if firstChoice == "Y":
-    print(f'You choose yes \n{choiceCardFunction(quantity=2, owner='user')}')
+    print(f'\n{choiceCardFunction(quantity=2, owner='user')}')
     print(f'{choiceCardFunction(quantity=2, owner='dealer')}')
 
 condiction = True
 while condiction:
-        print(f'Pontos totais {totalScore[-1]}')
-        if totalScore[-1] < 21:
+        print(f'Pontos totais {totalScoreUser[-1]}')
+        if totalScoreUser[-1] < 21 :
             choice = input("Type 'y' to get another card or type 'n' to pass: ").capitalize()
             if choice == "Y":
                 print(choiceCardFunction(1, 'user'))
-            else:
-                
+            elif choice == "N":
                 break
-        else:
+        elif totalScoreUser[-1] > 21:
             print('You lose')
+            condiction = False
             break
-
+        
+#O codigo não está retornando  o valor do As para a soma total dos valores

@@ -1,5 +1,7 @@
 import random
-from random import choice, randint
+import os
+
+import drawLogo
 #Notes
 #Ace/Às: 1 or 11
 #Jack: 10
@@ -9,20 +11,18 @@ from random import choice, randint
 choosenCardsDealer = []
 choosenCardsOwner = []
 limiter = 21
-
-
 totalScoreUser = []
 totalScoreDealer = []
-def choiceCardFunction(quantity, owner):
+def choice_card_function(quantity, owner):
     amountTotalUser = 0 #Acumulador dos valores de cada carta do  usuario
     amountValueDealer = 0 #Acumulador dos valores de cada carta do computador(dealer)
-    
+
     cardsValueList = [2, 3, 4, 5, 6, 7, 8, 9, 10, "A", "J", "K", "Q"]
     if owner == "user":
         for i in range(quantity):
-            choosenCards = (random.choice(cardsValueList))         
-            choosenCardsOwner.append(choosenCards)        
-        for card in choosenCardsOwner: 
+            choosenCards = (random.choice(cardsValueList))
+            choosenCardsOwner.append(choosenCards)
+        for card in choosenCardsOwner:
             if card == "J" or card == "K" or card == "Q":
                 amountTotalUser += 10
             elif card == "A":
@@ -35,8 +35,8 @@ def choiceCardFunction(quantity, owner):
     elif owner == "dealer":
         for i in range(quantity):
             choosenCards = (random.choice(cardsValueList))
-            choosenCardsDealer.append(choosenCards)        
-        for card in choosenCardsDealer: 
+            choosenCardsDealer.append(choosenCards)
+        for card in choosenCardsDealer:
             if card == "J" or card == "K" or card == "Q":
                 amountValueDealer += 10
             else:
@@ -44,28 +44,44 @@ def choiceCardFunction(quantity, owner):
             totalScoreDealer.append(amountValueDealer)
         return f"Computer  {choosenCardsDealer}, Total Score: {amountValueDealer} , computer first card: {choosenCardsDealer[0]}"
 
+def main():
+    print(drawLogo.logo)
+    firstChoice = input("Do you want to play a blackjack game? 'Y' or 'N': ").capitalize()
+    if firstChoice == "Y":
+        print(f'\n{choice_card_function(quantity=2, owner='user')}')
+        print(f'{choice_card_function(quantity=2, owner='dealer')}')
 
-firstChoice = input("Do you want to play a blackjack game? 'Y' or 'N': ").capitalize()
-if firstChoice == "Y":
-    print(f'\n{choiceCardFunction(quantity=2, owner='user')}')
-    print(f'{choiceCardFunction(quantity=2, owner='dealer')}')
 
-condiction = True
-while condiction:
-        print(f'Pontos totais {totalScoreUser[-1]}')
-        if totalScoreUser[-1] < 21 :
-            choice = input("Type 'y' to get another card or type 'n' to pass: ").capitalize()
-            if choice == "Y":
-                print(choiceCardFunction(1, 'user'))
-                print(choiceCardFunction(1, 'dealer'))
-            elif choice == "N":
+    while True:
+
+            print(f'Pontos totais {totalScoreUser[-1]}')
+            if totalScoreUser[-1] < limiter :
+                choice = input("Type 'y' to get another card or type 'n' to pass: ").capitalize()
+
+                if choice == "Y": #Buy a card
+                    print(choice_card_function(1, 'user'))
+                elif choice == "N": #Pass
+                    print(choice_card_function(1, 'dealer'))
+                    if totalScoreDealer[-1] > limiter:
+                        print(f"You win: Computer's final hand{choosenCardsDealer}")
+                        break
+                    elif totalScoreDealer[-1] == limiter:
+                        print(f"You lose\nComputer's final hand{choosenCardsDealer} Computer final socre: {totalScoreDealer[-1]}")
+                    else:
+                         print(f"You win: Computer's final hand{choosenCardsDealer}")
+
+            elif totalScoreUser[-1] > limiter:
+                print('You lose')
+                print(f"Computer's final hand{choosenCardsDealer} Computer final score: {totalScoreDealer[-1]}")
                 break
-        elif totalScoreUser[-1] > 21:
-            print('You lose')
-            condiction = False
-            break
-        else:
-            print(f"You win {choosenCardsOwner} Your Score {totalScoreUser[-1]}\nComputer's final hand:")
-            condiction = False
-        
-#O codigo não está retornando  o valor do As para a soma total dos valores
+            else:
+                print(f"You win {choosenCardsOwner} Your Score {totalScoreUser[-1]}\nComputer's final hand:{choosenCardsDealer}")
+
+while True:
+
+    choosenCardsDealer = []
+    choosenCardsOwner = []
+    limiter = 21
+    totalScoreUser = []
+    totalScoreDealer = []
+    main()

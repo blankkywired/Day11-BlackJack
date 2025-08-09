@@ -8,11 +8,6 @@ import drawLogo
 #Queen: 10
 #King: 10
 
-choosenCardsDealer = []
-choosenCardsOwner = []
-limiter = 21
-totalScoreUser = []
-totalScoreDealer = []
 def choice_card_function(quantity, owner):
     amountTotalUser = 0 #Acumulador dos valores de cada carta do  usuario
     amountValueDealer = 0 #Acumulador dos valores de cada carta do computador(dealer)

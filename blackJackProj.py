@@ -8,11 +8,6 @@ import drawLogo
 #Queen: 10
 #King: 10
 
-choosenCardsDealer = []
-choosenCardsOwner = []
-limiter = 21
-totalScoreUser = []
-totalScoreDealer = []
 def choice_card_function(quantity, owner):
     amountTotalUser = 0 #Acumulador dos valores de cada carta do  usuario
     amountValueDealer = 0 #Acumulador dos valores de cada carta do computador(dealer)
@@ -51,10 +46,10 @@ def main():
         print(f'\n{choice_card_function(quantity=2, owner='user')}')
         print(f'{choice_card_function(quantity=2, owner='dealer')}')
 
-    condiction = True
-    while condiction:
 
-            #print(f'Pontos totais {totalScoreUser[-1]}')
+    while True:
+
+            print(f'Pontos totais {totalScoreUser[-1]}')
             if totalScoreUser[-1] < limiter :
                 choice = input("Type 'y' to get another card or type 'n' to pass: ").capitalize()
 
@@ -64,14 +59,11 @@ def main():
                     print(choice_card_function(1, 'dealer'))
                     if totalScoreDealer[-1] > limiter:
                         print(f"You win: Computer's final hand{choosenCardsDealer}")
-                        condiction = False
                         break
                     elif totalScoreDealer[-1] == limiter:
                         print(f"You lose\nComputer's final hand{choosenCardsDealer} Computer final socre: {totalScoreDealer[-1]}")
-                        condiction = False
                     else:
                          print(f"You win: Computer's final hand{choosenCardsDealer}")
-                         condiction = False
 
             elif totalScoreUser[-1] > limiter:
                 print('You lose')
@@ -88,5 +80,3 @@ while True:
     totalScoreUser = []
     totalScoreDealer = []
     main()
-
-#Adicionado linha de test

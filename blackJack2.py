@@ -1,19 +1,21 @@
 import random
 import drawLogo
 print(drawLogo.logo)
+3
 def deaf_card():
     """Choice a random card of the deck"""
     cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
     cards = random.choice(cards)
     return cards
 
-def total_score(owner):
-    """Sum the total value of the owner's hand"""
-    sumNum = 0
-    for element in owner:
-        sumNum += element
-    return sumNum
 
+def total_score(owner):
+    total = sum(owner)
+    if 11 in owner and total > 21:
+        owner.remove(11)
+        owner.append(1)
+        total = sum(owner)
+    return total
 
 def find_winner():
     """Find the final winner using value's total score"""
@@ -26,16 +28,13 @@ def find_winner():
         return "Draw"
     elif 0 < total_score(user_cards) <= 21 and total_score(computer_cards) > 21:
         return "Player wins" 
-    elif total_score(user_cards) < (total_score(computer_cards) < 21):
+    elif total_score(user_cards) < (total_score(computer_cards) <= 21):
         return "Dealer wins"
     elif total_score(user_cards) < 21 and total_score(computer_cards) == 21:
         return "Dealer Wins"
     
-
-
 user_cards = []
 computer_cards = []
-
 
 for i in range(2):
     user_cards.append(deaf_card())

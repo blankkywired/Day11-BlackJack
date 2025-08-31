@@ -17,54 +17,47 @@ def total_score(owner):
         total = sum(owner)
     return total
 
-def find_winner():
-    """Find the final winner using value's total score"""
 
-    if total_score(user_cards) == 21 and total_score(computer_cards) != 21:
-        return "Player wins"
-    elif total_score(user_cards) > 21:
-        return "Dealer Wins"
-    elif total_score(user_cards) == 21 and total_score(computer_cards) == 21:
-        return "Draw"
-    elif 0 < total_score(user_cards) <= 21 and total_score(computer_cards) > 21:
-        return "Player wins" 
-    elif total_score(user_cards) < (total_score(computer_cards) <= 21):
-        return "Dealer wins"
-    elif total_score(user_cards) < 21 and total_score(computer_cards) == 21:
-        return "Dealer Wins"
+def find_winner():
+    user = total_score(user_cards)
+    dealer = total_score(computer_cards)
+
+    if user > 21:
+        return "Dealer wins! Player busted."
+    elif dealer > 21:
+        return "Player wins! Dealer busted."
+    elif user == dealer:
+        return "Draw!"
+    elif user == 21:
+        return "Player wins with Blackjack!"
+    elif dealer == 21:
+        return "Dealer wins with Blackjack!"
+    elif user > dealer:
+        return "Player wins!"
+    else:
+        return "Dealer wins!"
     
 user_cards = []
 computer_cards = []
 
+#First move
 for i in range(2):
     user_cards.append(deaf_card())
     computer_cards.append(deaf_card())
 
-#print(f'User Hand {user_cards} Total: {total_score(user_cards)}\nComputer Hand{computer_cards} Total: {total_score(computer_cards)}')
-print(f'User Hand {user_cards} Current score: {total_score(user_cards)}\nComputer current score {total_score(computer_cards)}')
+#Show result of the first move
+print(f'User Hand {user_cards} Current score: {total_score(user_cards)}\nComputer first card: {computer_cards[0]}')
 
-condition = True
-while condition:
-    if total_score(computer_cards) < 17:
-        continueToPlay = input("Type 'y' to get another card, type 'n' to pass: ").lower()
-    
-        if continueToPlay == "y":
-            for i in range(1):
-                user_cards.append(deaf_card())
-                computer_cards.append(deaf_card())
-        elif continueToPlay == "n":
-            computer_cards.append(deaf_card())
+while total_score(user_cards) < 21:
+    continue_to_play = input("Type 'y' to get another card or press n 'to' pass: ")
+    if continue_to_play == "y":
+        user_cards.append(deaf_card())
+        print(f'User Hand {user_cards} Current score: {total_score(user_cards)}\nComputer first card: {computer_cards[0]}')
     else:
-        continueToPlay = input("Type 'y' to get another card, type 'n' to pass: ").lower()
-        if continueToPlay == "y":
-            for i in range(1):
-                user_cards.append(deaf_card())
-                computer_cards.append(deaf_card())
-        elif continueToPlay == "n":
-            computer_cards.append(deaf_card())
-    condition = False
-
-print(f'User Hand {user_cards} Current score: {total_score(user_cards)}\nComputer hand: {computer_cards} Total Score: {total_score(computer_cards)}')
+        break
+while total_score(computer_cards) < 17:
+    computer_cards.append(deaf_card())
+print(f'User Hand {user_cards} Current score: {total_score(user_cards)}\nComputer final hand: {computer_cards} Total Score: {total_score(computer_cards)}')
 print(find_winner())
 
 

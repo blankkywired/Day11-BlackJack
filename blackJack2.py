@@ -59,6 +59,8 @@ def main():
         else:
             break
 
+#Esta linha indica que o dealer irá comprar cartas ate que a pontuação total seja igual a 17, a ação de compra ocorre de maneira separada da compra do usuario
+
     while total_score(computer_cards) < 17:
         computer_cards.append(deaf_card())
 

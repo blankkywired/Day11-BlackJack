@@ -38,8 +38,8 @@ def find_winner():
     else:
         return "Dealer wins!"
     
-user_cards = []
-computer_cards = []
+#user_cards = []
+#computer_cards = []
 
 #First move
 def main():

@@ -1,82 +1,89 @@
 import random
+import drawLogo
 import os
 
-import drawLogo
-#Notes
-#Ace/Às: 1 or 11
-#Jack: 10
-#Queen: 10
-#King: 10
 
+<<<<<<< HEAD
 def choice_card_function(quantity, owner):
     amountTotalUser = 0 #Acumulador dos valores de cada carta do  usuario
     amountValueDealer = 0 #Acumulador dos valores de cada carta do computador(dealer)
+=======
+def deaf_card():
+    """Choice a random card of the deck"""
+    cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+    cards = random.choice(cards)
+    return cards
+>>>>>>> test
 
-    cardsValueList = [2, 3, 4, 5, 6, 7, 8, 9, 10, "A", "J", "K", "Q"]
-    if owner == "user":
-        for i in range(quantity):
-            choosenCards = (random.choice(cardsValueList))
-            choosenCardsOwner.append(choosenCards)
-        for card in choosenCardsOwner:
-            if card == "J" or card == "K" or card == "Q":
-                amountTotalUser += 10
-            elif card == "A":
-                amountTotalUser += int(input('What value do you want?(1/11):'))
-            else:
-                amountTotalUser += card
-        totalScoreUser.append(amountTotalUser) #Salvando o valor total em totalScoreUser
-        return f"Your cards {choosenCardsOwner} Total Score {amountTotalUser}"
 
-    elif owner == "dealer":
-        for i in range(quantity):
-            choosenCards = (random.choice(cardsValueList))
-            choosenCardsDealer.append(choosenCards)
-        for card in choosenCardsDealer:
-            if card == "J" or card == "K" or card == "Q":
-                amountValueDealer += 10
-            else:
-                amountValueDealer += card
-            totalScoreDealer.append(amountValueDealer)
-        return f"Computer  {choosenCardsDealer}, Total Score: {amountValueDealer} , computer first card: {choosenCardsDealer[0]}"
+def total_score(owner):
+    total = sum(owner)
+    if 11 in owner and total > 21:
+        owner.remove(11)
+        owner.append(1)
+        total = sum(owner)
+    return total
 
+
+#Check high score
+
+def find_winner():
+    user = total_score(user_cards)
+    dealer = total_score(computer_cards)
+
+    if user > 21:
+        return "Dealer wins! Player busted."
+    elif dealer > 21:
+        return "Player wins! Dealer busted."
+    elif user == dealer:
+        return "Draw!"
+    elif user == 21:
+        return "Player wins with Blackjack!"
+    elif dealer == 21:
+        return "Dealer wins with Blackjack!"
+    elif user > dealer:
+        return "Player wins!"
+    else:
+        return "Dealer wins!"
+    
+user_cards = []
+computer_cards = []
+
+#First move
 def main():
     print(drawLogo.logo)
-    firstChoice = input("Do you want to play a blackjack game? 'Y' or 'N': ").capitalize()
-    if firstChoice == "Y":
-        print(f'\n{choice_card_function(quantity=2, owner='user')}')
-        print(f'{choice_card_function(quantity=2, owner='dealer')}')
+    for i in range(2):
+        user_cards.append(deaf_card())
+        computer_cards.append(deaf_card())
+
+    #Show result of the first move
+    print(f'User Hand {user_cards} Current score: {total_score(user_cards)}\nComputer first card: {computer_cards[0]}')
+
+    while total_score(user_cards) < 21:
+        continue_to_play = input("Type 'y' to get another card or press n 'to' pass: ")
+        if continue_to_play == "y":
+            user_cards.append(deaf_card())
+            print(f'\nUser Hand {user_cards} Current score: {total_score(user_cards)}\nComputer first card: {computer_cards[0]}')
+        else:
+            break
+
+    while total_score(computer_cards) < 17:
+        computer_cards.append(deaf_card())
+
+    print(f'\nUser Hand {user_cards} Current score: {total_score(user_cards)}\nComputer final hand: {computer_cards} Total Score: {total_score(computer_cards)}')
+    print(find_winner())
 
 
-    while True:
+start = True
+while start:
+    user_cards = []
+    computer_cards = []
 
-            print(f'Pontos totais {totalScoreUser[-1]}')
-            if totalScoreUser[-1] < limiter :
-                choice = input("Type 'y' to get another card or type 'n' to pass: ").capitalize()
-
-                if choice == "Y": #Buy a card
-                    print(choice_card_function(1, 'user'))
-                elif choice == "N": #Pass
-                    print(choice_card_function(1, 'dealer'))
-                    if totalScoreDealer[-1] > limiter:
-                        print(f"You win: Computer's final hand{choosenCardsDealer}")
-                        break
-                    elif totalScoreDealer[-1] == limiter:
-                        print(f"You lose\nComputer's final hand{choosenCardsDealer} Computer final socre: {totalScoreDealer[-1]}")
-                    else:
-                         print(f"You win: Computer's final hand{choosenCardsDealer}")
-
-            elif totalScoreUser[-1] > limiter:
-                print('You lose')
-                print(f"Computer's final hand{choosenCardsDealer} Computer final score: {totalScoreDealer[-1]}")
-                break
-            else:
-                print(f"You win {choosenCardsOwner} Your Score {totalScoreUser[-1]}\nComputer's final hand:{choosenCardsDealer}")
-
-while True:
-
-    choosenCardsDealer = []
-    choosenCardsOwner = []
-    limiter = 21
-    totalScoreUser = []
-    totalScoreDealer = []
-    main()
+    continue_to_play = input('\nDo you want to play a blackjack game? Y or N:').lower()
+    if continue_to_play == "y":
+        
+        os.system('cls' if os.name == 'nt' else 'clear')
+        main()
+    else:
+        start = False
+        break

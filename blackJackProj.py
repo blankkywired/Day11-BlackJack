@@ -19,6 +19,8 @@ def total_score(owner):
     return total
 
 
+#Check high score
+
 def find_winner():
     user = total_score(user_cards)
     dealer = total_score(computer_cards)
@@ -55,14 +57,14 @@ def main():
         continue_to_play = input("Type 'y' to get another card or press n 'to' pass: ")
         if continue_to_play == "y":
             user_cards.append(deaf_card())
-            print(f'User Hand {user_cards} Current score: {total_score(user_cards)}\nComputer first card: {computer_cards[0]}')
+            print(f'\nUser Hand {user_cards} Current score: {total_score(user_cards)}\nComputer first card: {computer_cards[0]}')
         else:
             break
 
     while total_score(computer_cards) < 17:
         computer_cards.append(deaf_card())
 
-    print(f'User Hand {user_cards} Current score: {total_score(user_cards)}\nComputer final hand: {computer_cards} Total Score: {total_score(computer_cards)}')
+    print(f'\nUser Hand {user_cards} Current score: {total_score(user_cards)}\nComputer final hand: {computer_cards} Total Score: {total_score(computer_cards)}')
     print(find_winner())
 
 
@@ -71,7 +73,7 @@ while start:
     user_cards = []
     computer_cards = []
 
-    continue_to_play = input('Do you want to play a blackjack game? Y or N:').lower()
+    continue_to_play = input('\nDo you want to play a blackjack game? Y or N:').lower()
     if continue_to_play == "y":
         
         os.system('cls' if os.name == 'nt' else 'clear')

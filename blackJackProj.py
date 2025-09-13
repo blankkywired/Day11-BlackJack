@@ -2,18 +2,11 @@ import random
 import drawLogo
 import os
 
-
-<<<<<<< HEAD
-def choice_card_function(quantity, owner):
-    amountTotalUser = 0 #Acumulador dos valores de cada carta do  usuario
-    amountValueDealer = 0 #Acumulador dos valores de cada carta do computador(dealer)
-=======
 def deaf_card():
     """Choice a random card of the deck"""
     cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
     cards = random.choice(cards)
     return cards
->>>>>>> test
 
 
 def total_score(owner):
@@ -46,8 +39,8 @@ def find_winner():
     else:
         return "Dealer wins!"
     
-user_cards = []
-computer_cards = []
+#user_cards = []
+#computer_cards = []
 
 #First move
 def main():
@@ -65,6 +58,7 @@ def main():
             user_cards.append(deaf_card())
             print(f'\nUser Hand {user_cards} Current score: {total_score(user_cards)}\nComputer first card: {computer_cards[0]}')
         else:
+            #If the user get out before 17, the dealer will continue getting cards
             break
 
     while total_score(computer_cards) < 17:
@@ -78,7 +72,8 @@ start = True
 while start:
     user_cards = []
     computer_cards = []
-
+    
+    #Game Start here
     continue_to_play = input('\nDo you want to play a blackjack game? Y or N:').lower()
     if continue_to_play == "y":
         
